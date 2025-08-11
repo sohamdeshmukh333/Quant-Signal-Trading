@@ -45,3 +45,42 @@ To build an end-to-end quant research pipeline that:
 
 ## 📂 Folder Structure
 
+quant-ai-signal-project/
+│
+├── data/
+│   ├── raw/          # scraped tweets, raw price CSVs
+│   ├── processed/    # cleaned text, sentiment, merged datasets
+│   └── signals/      # generated signals for backtesting
+│
+├── models/
+│   └── model.joblib  # saved ML model(s)
+│
+├── src/              # Python scripts for each stage
+│   ├── scrape_tweets.py
+│   ├── clean_text.py
+│   ├── sentiment_pipeline.py
+│   ├── download_price_data.py
+│   ├── merge_data.py
+│   ├── feature_engineering.py
+│   ├── train_model.py
+│   ├── signal_generator.py
+│   └── backtest.py
+│
+├── app/              # Streamlit frontend
+│   └── app.py
+│
+├── notebooks/        # Jupyter notebooks for exploration
+│   ├── explore_sentiment.ipynb
+│   ├── feature_analysis.ipynb
+│   └── backtest_analysis.ipynb
+│
+├── deploy/           # AWS deployment scripts & configs
+│   └── ec2_setup.md
+│
+├── report/           # Documentation
+│   ├── project_summary.md
+│   └── daily_log.md
+│
+├── requirements.txt  # dependencies
+├── .gitignore        # what not to push to GitHub
+└── README.md         # project overview
