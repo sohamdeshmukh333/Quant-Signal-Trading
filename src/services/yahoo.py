@@ -72,13 +72,34 @@ def fetch_prices(
 
     return OHLCV_data
         
+#Fetch basic financials
+def get_financials(symbol: str) -> Dict:
+    ticker = yf.Ticker(symbol)
+    try:
+        financials_df = ticker.financials
 
-# #Fetch basic financials
-# financials = ticker.financials
-# print(f"\nFinancials for {tickerSymbol}:")
-# print(financials)
+        if financials_df is None or financials_df.empty:
+            return {"message": "No financial data available for this symbol"}
+        #Clean + serialize the DataFrame
+        cleaned = financials_df.fillna(0).astype(str)
+        return cleaned.to_dict()
+    
+    except Exception as e:
+        return {"error": str(e)}
 
-# #Fetch stock actions like dividends and splits
-# actions = ticker.actions
-# print("\nStock Actions:")
-# print(actions)
+# Fetch stock actions like dividends and splits
+def get_actions(symbol: str) -> List:
+    ticker = yf.Ticker(symbol)
+    actions = ticker.actions.reset_index()
+    return actions.to_dict(orient="records")
+
+def get_company_info(symbol: str) -> dict:
+    ticker = yf.Ticker(symbol)
+    return {
+        "name": ticker.info.get("longName"),
+        "sector": ticker.info.get("sector"),
+        "industry": ticker.info.get("industry"),
+        "country": ticker.info.get("country"),
+        "marketCap": ticker.info.get("marketCap"),
+        "website": ticker.info.get("website")
+    }
